@@ -1,0 +1,220 @@
+# Команды в Django Shell
+
+---------------------------
+
+# 0. Начало работы в терминале после создания модели в models:
+
+py manage.py makemigrations
+
+py manage.py migrate
+
+py manage.py shell
+
+from news.models import *
+
+--------------------------
+
+# 1. Создать двух пользователей (с помощью метода User.objects.create_user).
+
+user1 = User.objects.create_user(username='Sil', first_name='Silvio', last_name='Dante')
+user2 = User.objects.create_user(username='Tony', first_name='Antony', last_name='Soprano')
+
+--------------------------
+
+# 2. Создать два объекта модели Author, связанные с пользователями.
+
+Author.objects.create(authorUser=user1)
+Author.objects.create(authorUser=user2)
+
+author1 = Author.objects.get(id=1)
+author2 = Author.objects.get(id=2)
+
+-------------------------
+
+# 3. Добавить 4 категории в модель Category.
+
+Category.objects.create(categoryName = "IT")
+Category.objects.create(categoryName = "Education")
+Category.objects.create(categoryName = "FinTech")
+Category.objects.create(categoryName = "Sport")
+
+-------------------------
+
+# 4. Добавить 4 статьи и 1 новость.
+
+Post.objects.create(author=author1, categoryType='NW', postTitle='New стопслово1 Data Base', postText='Database is стопслово1  an organized collection of data stored and accessed electronically from a computer system. Where databases are more complex they are often developed using formal design and modeling techniques.    стопслово2   The database management system (DBMS) is the software that interacts with end users, applications, and the database itself to capture and analyze the data. The DBMS software additionally encompasses the core facilities provided to administer the database. The sum total of the database, the DBMS and the associated applications can be referred to as a "database system". Often the term "database" is also used loosely to refer to any of the DBMS, the database system or an application associated with the database. стопслово3')
+
+Post.objects.create(author=author1, categoryType='AR', postTitle='Big стопслово1 Data', postText='Lorem ipsum стопслово2 dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Amet cursus sit amet dictum sit amet justo donec. Purus semper eget duis at tellus. Sed ullamcorper morbi tincidunt ornare. Diam sollicitudin tempor id eu nisl nunc mi ipsum. Cursus euismod quis viverra nibh. Maecenas volutpat blandit aliquam etiam erat. Velit egestas dui id ornare arcu odio ut. Amet tellus cras adipiscing enim eu turpis egestas pretium aenean. Nisi lacus sed viverra tellus in hac. Ridiculus mus mauris vitae ultricies leo. стопслово3')
+
+Post.objects.create(author=author1, categoryType='AR', postTitle='Python стопслово1', postText='Python — высокоуровневый язык программирования общего назначения с динамической строгой типизацией и автоматическим управлением памятью, ориентированный на повышение производительности разработчика, читаемости кода и его качества, а также на обеспечение переносимости написанных на нём программ. Язык является полностью объектно-ориентированным — всё является объектами. Необычной особенностью языка является выделение блоков кода пробельными отступами. Синтаксис ядра языка минималистичен, за счёт чего на практике редко возникает необходимость обращаться к документации. Сам же язык известен как интерпретируемый и используется в том числе для написания скриптов. Недостатками языка являются зачастую более низкая скорость работы и более высокое потребление памяти написанных на нём программ по сравнению с аналогичным кодом, написанным на компилируемых языках, таких как Си или стопслово3')
+
+Post.objects.create(author=author2, categoryType='AR', postTitle='Selenium стопслово1', postText='Selenium WebDriver — это стопслово2 инструмент для автоматизации действий веб-браузера. В большинстве случаев используется для тестирования Web-приложений, но этим не ограничивается. В частности, он может быть использован для решения рутинных задач администрирования сайта или регулярного получения данных из различных источников (сайтов). Стопслово3 Selenium WebDriver — это в первую очередь набор библиотек для различных языков программирования. Эти библиотеки используются для отправки HTTP запросов драйверу (отсюда и название WebDriver), с помощью протокола JsonWireProtocol[5], в которых указано действие, которое должен совершить браузер в рамках текущей сессии. Примерами таких команд могут быть команды нахождения элементов по локатору, переход по ссылкам, парсинг текста страницы/элемента, нажатие кнопок или переход по ссылкам на странице веб-сайта. Существуют как официальные привязки библиотеки к популярным языкам программирования, так и любительские. К примеру, библиотека для поддержки языка PHP не является официальной и разрабатывается Facebook. стопслово2')
+
+Post.objects.create(author=author2, categoryType='AR', postTitle='Django стопслово1', postText='Django is a based стопслово2 free and open-source web framework that follows the model–template–views (MTV) architectural pattern. стопслово3')
+
+-------------------------
+
+
+# 5. Присвоить им категории (как минимум в одной статье/новости должно быть не меньше 2 категорий).
+-- Добавляем категорию
+Post.objects.get(id=1).postCategory.add(Category.objects.get(id=1))
+Post.objects.get(id=1).postCategory.add(Category.objects.get(id=2))
+Post.objects.get(id=1).postCategory.add(Category.objects.get(id=3))
+
+Post.objects.get(id=2).postCategory.add(Category.objects.get(id=1))
+Post.objects.get(id=2).postCategory.add(Category.objects.get(id=2))
+
+Post.objects.get(id=3).postCategory.add(Category.objects.get(id=2))
+Post.objects.get(id=3).postCategory.add(Category.objects.get(id=3))
+
+Post.objects.get(id=4).postCategory.add(Category.objects.get(id=1))
+
+Post.objects.get(id=5).postCategory.add(Category.objects.get(id=1))
+
+------------------
+
+
+# 6. Создать как минимум 4 комментария к разным объектам модели Post (в каждом объекте должен быть как минимум один комментарий).
+-- Добавляем комментарий
+Comment.objects.create(commentPost=Post.objects.get(id=1), commentUser=Author.objects.get(id=1).authorUser, commentText="It's amazing")
+Comment.objects.create(commentPost=Post.objects.get(id=2), commentUser=Author.objects.get(id=2).authorUser, commentText="Cool!")
+Comment.objects.create(commentPost=Post.objects.get(id=3), commentUser=Author.objects.get(id=2).authorUser, commentText="Awesome")
+Comment.objects.create(commentPost=Post.objects.get(id=2), commentUser=Author.objects.get(id=1).authorUser, commentText="Good Job!")
+Comment.objects.create(commentPost=Post.objects.get(id=4), commentUser=Author.objects.get(id=1).authorUser, commentText="Nice!")
+Comment.objects.create(commentPost=Post.objects.get(id=4), commentUser=Author.objects.get(id=2).authorUser, commentText="Not bad!")
+Comment.objects.create(commentPost=Post.objects.get(id=5), commentUser=Author.objects.get(id=1).authorUser, commentText="Amazing!")
+-- Проверяем:
+Comment.objects.get(id=1)
+Comment.objects.get(id=1).commentText
+
+------------------
+
+# 7. Применяя функции like() и dislike() к статьям/новостям и комментариям, скорректировать рейтинги этих объектов.
+
+-- Применим метод like (т.к. это метод - обязательно скобочки):
+Post.objects.get(id=1).like()
+Post.objects.get(id=1).like()
+Post.objects.get(id=2).like()
+Post.objects.get(id=2).like()
+Post.objects.get(id=3).like()
+Post.objects.get(id=3).like()
+Post.objects.get(id=4).like()
+Post.objects.get(id=4).like()
+Post.objects.get(id=4).like()
+Post.objects.get(id=5).like()
+Post.objects.get(id=5).like()
+
+Comment.objects.get(id=1).like()
+Comment.objects.get(id=2).like()
+Comment.objects.get(id=3).like()
+Comment.objects.get(id=4).like()
+Comment.objects.get(id=5).like()
+Comment.objects.get(id=6).like()
+Comment.objects.get(id=7).like()
+
+-- Выведим рейтинг:
+Comment.objects.get(id=1).rating
+-- 1
+
+-- Применим метод dislike 3 раза:
+Comment.objects.get(id=1).dislike()
+Comment.objects.get(id=1).dislike()
+Comment.objects.get(id=1).dislike()
+Comment.objects.get(id=3).dislike()
+Comment.objects.get(id=3).dislike()
+Comment.objects.get(id=3).dislike()
+Post.objects.get(id=1).dislike()
+
+-- Выведим рейтинг:
+Comment.objects.get(id=1).rating
+-- -2
+Comment.objects.get(id=3).rating
+-- -2
+
+------------------
+
+# 8. Обновить рейтинги пользователей.
+-- Возьмём автора и посмотрим его рейтинг:
+
+author1 = Author.objects.get(id=1)
+author1.update_rating()
+author1.authorRating
+16
+
+author2 = Author.objects.get(id=2)
+author2.update_rating()
+author2.authorRating
+15
+
+-------------------------
+
+# 9. Вывести username и рейтинг лучшего пользователя (применяя сортировку и возвращая поля первого объекта).
+
+-- Выводим рейтинг и username через индексы:
+a = Author.objects.order_by('-authorRating')[:1]
+a
+<QuerySet [<Author: Sil>]>
+>>> a[0].authorUser.username
+'Sil'
+>>> a[0].authorRating
+16
+
+или так
+
+-- Выводим рейтинг и username лучшего автора через цикл for:
+a = Author.objects.order_by('authorRating')[:1]
+for i in a:
+    i.authorRating
+    i.authorUser.username
+16
+'Sil'
+
+--------------------------
+
+# 10. Вывести дату добавления, username автора, рейтинг, заголовок и превью лучшей статьи, основываясь на лайках/дислайках к этой статье.
+
+-- Находим лучшую статью:
+p = Post.objects.order_by('-rating')[:1]
+p
+<QuerySet [<Post: Selenium стопслово1. Selenium WebDriver — это стопслово2 инструмент для автоматизации действий веб-браузера. В большинстве случаев используется д ...>]>
+
+-- Выводим через цикл for:
+for i in p:
+    i.pubDate
+    i.author.authorUser.username
+    i.rating
+    i.postTitle
+    i.preview()
+
+-- или через индекс:
+p[0].pubDate
+datetime.datetime(2021, 10, 12, 21, 46, 38, 671953, tzinfo=<UTC>)
+p[0].author.authorUser.username
+'Tony'
+p[0].rating
+3
+p[0].postTitle
+'Selenium стопслово1'
+
+p[0].preview()
+'Selenium WebDriver — это стопслово2 инструмент для автоматизации действий веб-браузера. В большинстве случаев используется д ...'
+
+--------------------------------
+
+# 11. Вывести все комментарии (дата, пользователь, рейтинг, текст) к этой статье.
+
+-- Выводим всё выше перечисленное отсортировав по уровню рейтинга:
+
+Comment.objects.all().order_by('-rating').values('pubDate', 'commentUser', 'rating', 'commentText')
+
+<QuerySet [{'pubDate': datetime.datetime(2021, 10, 12, 21, 57, 29, 747051, tzinfo=<UTC>), 'commentUser': 2, 'rating': 1, 'commentText': 'Cool!'}, {'pubDate': datetime.datetime(2021, 10, 12, 21, 57, 49, 322074, tzinfo=<UTC>), 'commentUs
+er': 1, 'rating': 1, 'commentText': 'Good Job!'}, {'pubDate': datetime.datetime(2021, 10, 12, 21, 57, 59, 106592, tzinfo=<UTC>), 'commentUser': 1, 'rating': 1, 'commentText': 'Nice!'}, {'pubDate': datetime.datetime(2021, 10, 12, 21, 58
+, 11, 690447, tzinfo=<UTC>), 'commentUser': 2, 'rating': 1, 'commentText': 'Not bad!'}, {'pubDate': datetime.datetime(2021, 10, 12, 21, 58, 22, 575380, tzinfo=<UTC>), 'commentUser': 1, 'rating': 1, 'commentText': 'Amazing!'}, {'pubDate
+': datetime.datetime(2021, 10, 12, 21, 56, 31, 447295, tzinfo=<UTC>), 'commentUser': 1, 'rating': -2, 'commentText': "It's amazing"}, {'pubDate': datetime.datetime(2021, 10, 12, 21, 57, 39, 514633, tzinfo=<UTC>), 'commentUser': 2, 'rat
+ing': -2, 'commentText': 'Awesome'}]>
+
+---------------------------------
+
+
+
+
